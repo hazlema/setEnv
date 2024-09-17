@@ -1,0 +1,11 @@
+{
+  "name": "setenv",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.1.9"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
