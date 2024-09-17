@@ -18,11 +18,23 @@ const setEnv = async (envPath: string = ".env"): Promise<void> => {
             if (line.startsWith("#") || line.trim() === "") continue
 
             if (line.includes("=")) {
-                const [key, ...valueParts] = line.split("=")
-                const value = valueParts.join("=").trim() // Handle values containing '='
+                let [key, ...valueParts] = line.split("=")
+                let value = valueParts.join("=").trim()
+
+                key = key.trim()
+
+                Object.keys(process.env).forEach((envKey) => {
+                    if (process.env[envKey]) {
+                        const placeholder: string = "$" + envKey
+
+                        if (value.includes(placeholder)) {
+                            value = value.replace(placeholder, process.env[envKey] as string)
+                        }
+                    }
+                })
 
                 if (key && value) {
-                    process.env[key.trim()] = value
+                    process.env[key] = value
                 }
             }
         }
